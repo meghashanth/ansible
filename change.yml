@@ -1,0 +1,35 @@
+---
+
+ - name: "React with change example"
+   hosts: server1
+   serial: 1
+
+   tasks:
+
+   - name: "Install nginx"
+     debug:
+       msg: "Install nginx on: {{ inventory_hostname }}"
+  
+   - name: "Upgrade nginx"
+     debug:
+       msg: "Upgrade nginx on: {{ inventory_hostname }}"
+
+   - name: "configure nginx"
+     debug:
+       msg: "start {{ inventory_hostname }}"
+     notify : restart nginx
+     changed_when: True
+
+   - name: "verify nginx"
+     debug:
+       msg: "verify: {{ inventory_hostname }}"
+
+
+   handlers:
+   - name: restart nginx
+     debug:
+       msg: "called handler for restart"
+
+   - debug:
+      var: ansible_hostname
+
